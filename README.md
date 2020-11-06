@@ -14,17 +14,8 @@ Ansilbe通过SSH协议进行管理节点和远程节点之间的通信。理论�
 * 拷贝文件
 * 安装包
 * 起服务
-* ...
 
 
-## 快速定位本书
-Google "Ansible入门" 或 访问网站 [Ansible入门](http://getansible.com/) [http://getansible.com/](http://getansible.com/)
+## 作者邮箱
 
-
-## 本书资源
-
-本文的所有ansible playbook例子都放在github上,欢迎补充和纠错:
-
-https://github.com/ansible-book/ansible-first-book-examples
-
-也可以联系作者进行纠正错误： shijingjing02@163.com
+也可以联系作者进行纠正错误： wuzhibin05@163.com

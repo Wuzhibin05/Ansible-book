@@ -8,7 +8,7 @@
 
 Handlers里面的每一个handler，也是对module的一次调用。而handlers与tasks不同，tasks会默认的按定义顺序执行每一个task，handlers则不会，它需要在tasks中被调用，才有可能被执行。
 
-Tasks中的任务都是有状态的，changed或者ok。 在Ansible中，只在task的执行状态为changed的时候，才会执行该task调用的handler，这也是handler与普通的event机制不同的地方。
+Tasks中的任务都是有状态的，changed或者ok。 在Ansible中，**只在task的执行状态为changed的时候，才会执行该task调用的handler**，这也是handler与普通的event机制不同的地方。
 
 
 
@@ -18,6 +18,10 @@ Tasks中的任务都是有状态的，changed或者ok。 在Ansible中，只在t
 什么情况下使用handlers呢? 
 
 如果你在tasks中修改了apache的配置文件。需要重起apache。此外还安装了apache的插件。那么还需要重起apache。像这样的应该场景中，重起apache就可以设计成一个handler. 
+
+1，一个task中修改了配置，需要重启服务。
+
+2，安装了服务的插件，需要重启服务。
 
 
 
