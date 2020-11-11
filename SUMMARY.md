@@ -3,7 +3,7 @@
 * [声明](a.architecture/a.declaration.md)
 * [什么是Ansible](README.md)
 * [Ansible的架构](chapter1.md)
-    * [Ansible Tower的架构](a.architecture/ansible_towerde_jia_gou.md)
+* [Ansible Tower的架构](a.architecture/ansible_towerde_jia_gou.md)
 ##  Ansible快速入门
 * [Ansible上手](b.begin/catalog.md)
     * [安装Ansible](b.begin/basics/a.Install_ansible.md)
@@ -59,7 +59,8 @@
         * [命令行查看module的用法](c.advance/module/ming_ling_xing_cha_kan_module_de_yong_fa.md)
     * [写出更好的Playbook脚本](c.advance/best_practice/zui_jia_shi_yong_fang_fa.md)
 ##  Ansible管理windows主机
-
+* [windows主机配置](d.windows/a.setup_host.md)
+* [Ansible服务端配置](d.windows/b.test_connect.md)
 ## Ansible Tower
 
 [Ansible Tower](tower/01_ansible_tower.md)
