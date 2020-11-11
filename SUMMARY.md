@@ -1,6 +1,6 @@
 # Ansible从入门到精通
 ##  Ansible的介绍
-* [声明](sheng_ming.md)
+* [声明](architecture/a.declaration.md)
 * [什么是Ansible](README.md)
 * [Ansible的架构](chapter1.md)
     * [Ansible Tower的架构](architecture/ansible_towerde_jia_gou.md)
@@ -58,6 +58,8 @@
         * [Extra module的使用方法](b.advance/module/extra_modulede_shi_yong_fang_fa.md)
         * [命令行查看module的用法](b.advance/module/ming_ling_xing_cha_kan_module_de_yong_fa.md)
     * [写出更好的Playbook脚本](b.advance/best_practice/zui_jia_shi_yong_fang_fa.md)
+##  Ansible管理windows主机
+
 ## Ansible Tower
 
 [Ansible Tower](tower/01_ansible_tower.md)
