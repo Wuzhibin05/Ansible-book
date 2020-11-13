@@ -10,7 +10,7 @@ index.html中，你需要指定你想替换的哪个部分，那么这个部分�
 
 index.html具体应该怎么写呢，既然是tamplate文件，那么我们就加一个后缀提高可读性，index.html.j2。下面文件中使用了两个变量ansible_hostname和ansible_default_ipv4.address。
 
-```
+```html
 <html>
 <title>Demo</title>
 <body>

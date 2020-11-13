@@ -2,8 +2,8 @@
 ##  Ansible的介绍
 * [声明](a.architecture/a.declaration.md)
 * [什么是Ansible](README.md)
-* [Ansible的架构](chapter1.md)
-* [Ansible Tower的架构](a.architecture/ansible_towerde_jia_gou.md)
+* [Ansible的架构](a.architecture/b.architecture_ansible.md)
+* [Ansible Tower的架构](a.architecture/c.architecture_ansible_towerde.md)
 ##  Ansible快速入门
 * [Ansible上手](b.begin/catalog.md)
     * [安装Ansible](b.begin/basics/a.Install_ansible.md)
@@ -30,10 +30,10 @@
 ##  Ansible进阶
 * [Ansible进阶](c.advance/ansible_advance.md)
     * [ansible的配置](c.advance/a.setting/ansible_cfg.md)
-    * [Host Inventory](c.advance/b.inventory/zhu_ji_mu_lu_guan_li.md)
-        * [远程主机的分组](c.advance/b.inventory/zhu_ji_mu_lu_fen_zu.md)
-        * [远程主机的连接参数和变量](c.advance/b.inventory/zhi_ding_lian_jie_de_can_shu.md)
-        * [按目录结构存储变量](c.advance/b.inventory/fen_zu_guan_li_wen_jian.md)
+    * [Host Inventory](c.advance/b.inventory/a.inventory_manage.md)
+        * [远程主机的分组](c.advance/b.inventory/b.inventory_group.md)
+        * [远程主机的连接参数和变量](c.advance/b.inventory/c.inventory_parameter.md)
+        * [按目录结构存储变量](c.advance/b.inventory/d.inventory_vars.md)
     * [Ansible的脚本\(Playbook\)](c.advance/c.playbook/playbook.md)
         * [Playbook基本语法](playbookji_ben_yu_fa.md)
             * [主机和用户\(hosts&user\)](c.advance/playbook/zhu_ji_he_yong_hu.md)

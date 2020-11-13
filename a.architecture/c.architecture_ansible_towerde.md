@@ -22,4 +22,4 @@ Ansile Tower则是针对解决企业级用户需求的，ansible tower是中心�
 
 说了这么多，看下面这张架构图就清晰了：
 
-![](ansible-tower-arti-2nd.png)
+![](images\ansible-tower-arti-2nd.png)

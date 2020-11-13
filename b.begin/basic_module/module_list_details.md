@@ -42,14 +42,14 @@ ansible servers -m ping
 
   
 
-```shell
+```yaml
 - debug:
     msg: "System {{ inventory_hostname }} has gateway {{ ansible_default_ipv4.gateway }}"
 ```
 
 执行结果
 
-```shell
+```yaml
 TASK [debug] *******************************************************************
 ok: [localhost] => {
     "msg": "System localhost has gateway 192.168.50.1"
@@ -62,7 +62,7 @@ ok: [localhost] => {
 
 * 打印系统的变量
 
-  ```shell
+  ```yaml
   - name: Display all variables/facts known for a host
     debug:
       var: hostvars[inventory_hostname]["ansible_default_ipv4"]["gateway"]
@@ -71,7 +71,7 @@ ok: [localhost] => {
   执行结果：
 
 
-  ```shell
+  ```yaml
   TASK [Display part of variables/facts known for a host] ************************
   ok: [localhost] => {
       "hostvars[inventory_hostname][\"ansible_default_ipv4\"][\"gateway\"]": "192.168.50.1"
@@ -81,7 +81,7 @@ ok: [localhost] => {
 * 打印动态注入的变量
 
 
-  ```shell
+  ```yaml
   - shell: /usr/bin/uptime
     register: result
 
@@ -92,7 +92,7 @@ ok: [localhost] => {
   执行结果
 
 
-  ```shell
+  ```yaml
   TASK [command] *****************************************************************
   changed: [localhost]
 
@@ -123,7 +123,7 @@ ok: [localhost] => {
 
 利用mode设置权限可以是用数字，当然也可以是符号的形式"u=rw,g=r,o=r"和"u+rw,g-wx,o-rwx"
 
-```shell
+```yaml
 - copy:
     src: /srv/myfiles/foo.conf
     dest: /etc/foo.conf
@@ -136,7 +136,7 @@ ok: [localhost] => {
 
 backup参数为yes的时候，如果发生了拷贝操作，那么会先备份下目标节点山的原文件。当两个文件相同时，不会进行拷贝操作，当然也没有必要备份啦。
 
-```shell
+```yaml
 - copy:
     src: sudoers
     dest: /tmp
@@ -149,7 +149,7 @@ validate参数接需要验证的命令。一般需要验证拷贝后的文件，
 
 ```visudo -cf /etc/sudoers```是验证sudoers文件有没有语法错误的命令。
 
-```shell
+```yaml
 - copy:
     src: /mine/sudoers
     dest: /etc/sudoers
@@ -167,7 +167,7 @@ index.html中，你需要指定你想替换的哪个部分，那么这个部分�
 
 index.html具体应该怎么写呢，既然是tamplate文件，那么我们就加一个后缀提高可读性，index.html.j2。下面文件中使用了两个变量ansible_hostname和ansible_default_ipv4.address。
 
-```shell
+```html
 <html>
 <title>Demo</title>
 <body>
@@ -185,7 +185,7 @@ index.html具体应该怎么写呢，既然是tamplate文件，那么我们就�
 
 在index.html.j2使用的两个变量ansible_hostname和ansible_default_ipv4.address都是facts变量，ansible会替我们搜索，直接可以在playbook中使用，当然也可以直接在template中使用。所以我们在写template语句中无需传入参数。
 
-```shell
+```yaml
 - name: Write the default index.html file
   template: src=templates/index.html.j2 dest=/var/www/html/index.html
 ```
@@ -196,7 +196,7 @@ index.html具体应该怎么写呢，既然是tamplate文件，那么我们就�
 
 在httpd.conf.j2模版文件中，所有变量的是用方法都是一样的，都是是用```{{}}```:
 
-```shell
+```yaml
 ServerRoot "/etc/httpd"
 ...
 Listen {{ http_port }}
@@ -205,7 +205,7 @@ Listen {{ http_port }}
 
 普通变量不是在调用template的时候传进去，而是通过playbook中vars关键字定义。当然如果在playbook中可以直接使用的变量，都可以在template中，包括后面的章节会提到的定义在inventory中的变量。
 
-```shell
+```yaml
 - hosts: localhost
   vars:
     http_port: 8080
@@ -221,7 +221,7 @@ Listen {{ http_port }}
 当然copy module不仅可以简单的拷贝文件到远程节点，还可以进行权限设置，文件备份，以及验证功能，那么这些功能，template同样具备。
 
 
-```
+```yaml
 - template:
     src: etc/ssh/sshd_config.j2
     dest: /etc/ssh/sshd_config.j2
@@ -240,7 +240,7 @@ file module设置远程值机上的文件、软链接（symlinks）和文件夹�
 
 当然mode参数可以直接赋值数字权限（必须以0开头），也可以赋值，还可以用来增加和删除权限。具体的写法见下面的代码：
 
-```
+```yaml
 - file:
     path: /etc/foo.conf
     owner: foo
@@ -253,7 +253,7 @@ file module设置远程值机上的文件、软链接（symlinks）和文件夹�
 ### 创建文件的软链接
 
 注意这里面的src和sest参数的含义是和copy module不一样的，file module里面所操作的文件都是远程节点上的文件。
-```
+```yaml
 - file:
     src: /file/to/link/to
     dest: /path/to/symlink
@@ -266,7 +266,7 @@ file module设置远程值机上的文件、软链接（symlinks）和文件夹�
 
 像touch命令一样创建一个新文件
 
-```
+```yaml
 - file:
     path: /etc/foo.conf
     state: touch
@@ -275,7 +275,7 @@ file module设置远程值机上的文件、软链接（symlinks）和文件夹�
 
 ### 创建新的文件夹
 
-```
+```yaml
 # create a directory if it doesn't exist
 - file:
     path: /etc/some_directory
@@ -292,7 +292,7 @@ user module可以增、删、改Linux远程节点的用户账户，并为其设�
 
 * 增加账户johnd，并且设置uid为1040，设置用户的primary group为admin
 
-  ```
+  ```yaml
   - user:
       name: johnd
       comment: "John Doe"
@@ -302,7 +302,7 @@ user module可以增、删、改Linux远程节点的用户账户，并为其设�
 
 * 创建账户james，并为james用户额外添加两个group
 
-  ```
+  ```yaml
   - user:
       name: james
       shell: /bin/bash
@@ -314,7 +314,7 @@ user module可以增、删、改Linux远程节点的用户账户，并为其设�
 
 删除账户johnd
 
-```
+```yaml
 - user:
     name: johnd
     state: absent
@@ -325,7 +325,7 @@ user module可以增、删、改Linux远程节点的用户账户，并为其设�
 
 * 为账户jsmith撞见一个 2048-bit的SSH key，放在~jsmith/.ssh/id_rsa
 
-  ```
+  ```yaml
   - user:
       name: jsmith
       generate_ssh_key: yes
@@ -335,7 +335,7 @@ user module可以增、删、改Linux远程节点的用户账户，并为其设�
 
 * 为用户添加过期时间：
 
-  ```
+  ```yaml
   - user:
       name: james18
       shell: /bin/zsh
@@ -351,7 +351,7 @@ yum module是用来管理red hat系的Linux上的安装包的，包括RHEL，Cen
 ### 从yum源上安装和删除包
 
 * 安装最新版本的包，如果已经安装了老版本，那么会更新到最新的版本：
-  ```
+  ```yaml
   - name: install the latest version of Apache
     yum:
       name: httpd
@@ -360,7 +360,7 @@ yum module是用来管理red hat系的Linux上的安装包的，包括RHEL，Cen
 
 * 安装指定版本的包
 
-  ```
+  ```yaml
   - name: install one specific version of Apache
     yum:
       name: httpd-2.2.29-1.4.amzn1
@@ -369,7 +369,7 @@ yum module是用来管理red hat系的Linux上的安装包的，包括RHEL，Cen
 
 * 删除httpd包
 
-  ```
+  ```yaml
   - name: remove the Apache package
     yum:
       name: httpd
@@ -378,7 +378,7 @@ yum module是用来管理red hat系的Linux上的安装包的，包括RHEL，Cen
 
 * 从指定的repo testing中安装包
 
-  ```
+  ```yaml
   - name: install the latest version of Apache from the testing repo
     yum:
       name: httpd
@@ -388,7 +388,7 @@ yum module是用来管理red hat系的Linux上的安装包的，包括RHEL，Cen
 
 ### 从yum源上安装一组包
 
-```
+```yaml
 - name: install the 'Development tools' package group
   yum:
     name: "@Development tools"
@@ -402,7 +402,7 @@ yum module是用来管理red hat系的Linux上的安装包的，包括RHEL，Cen
 
 ### 从本地文件中安装包
 
-```
+```yaml
 - name: install nginx rpm from a local file
   yum:
     name: /usr/local/src/nginx-release-centos-6-0.el6.ngx.noarch.rpm
@@ -411,7 +411,7 @@ yum module是用来管理red hat系的Linux上的安装包的，包括RHEL，Cen
 
 ### 从URL中安装包
 
-```
+```yaml
 - name: install the nginx rpm from a remote repo
   yum:
     name: http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
@@ -428,7 +428,7 @@ yum module是用来管理red hat系的Linux上的安装包的，包括RHEL，Cen
 
 * 开httpd服务
 
-  ```
+  ```yaml
   - service:
       name: httpd
       state: started
@@ -436,7 +436,7 @@ yum module是用来管理red hat系的Linux上的安装包的，包括RHEL，Cen
 
 * 关服务
 
-  ```
+  ```yaml
   - service:
       name: httpd
       state: stopped
@@ -444,7 +444,7 @@ yum module是用来管理red hat系的Linux上的安装包的，包括RHEL，Cen
 
 * 重起服务
 
-  ```
+  ```yaml
   - service:
       name: httpd
       state: restarted
@@ -452,7 +452,7 @@ yum module是用来管理red hat系的Linux上的安装包的，包括RHEL，Cen
 
 * 重载服务
 
-  ```
+  ```yaml
   - service:
       name: httpd
       state: reloaded
@@ -460,7 +460,7 @@ yum module是用来管理red hat系的Linux上的安装包的，包括RHEL，Cen
 
 ### 设置开机启动的服务
 
-```
+```yaml
 - service:
     name: httpd
     enabled: yes
@@ -468,7 +468,7 @@ yum module是用来管理red hat系的Linux上的安装包的，包括RHEL，Cen
 
 ### 启动网络服务下的接口
 
-```
+```yaml
 - service:
     name: network
     state: restarted
@@ -483,14 +483,14 @@ firewalld module为某服务和端口添加firewalld规则。firewalld中有正�
 firewalld要求远程节点上的firewalld版本在0.2.11以上。
 
 ### 为服务添加firewalld规则
-```
+```yaml
 - firewalld:
     service: https
     permanent: true
     state: enabled
 ```
 
-```
+```yaml
 - firewalld:
     zone: dmz
     service: http
@@ -499,14 +499,14 @@ firewalld要求远程节点上的firewalld版本在0.2.11以上。
 ```
 ### 为端口号添加firewalld规则
 
-```
+```yaml
 - firewalld:
     port: 8081/tcp
     permanent: true
     state: disabled
 ```
 
-```
+```yaml
 - firewalld:
     port: 161-162/udp
     permanent: true
@@ -515,21 +515,21 @@ firewalld要求远程节点上的firewalld版本在0.2.11以上。
 
 ### 其它复杂的firewalld规则
 
-```
+```yaml
 - firewalld:
     rich_rule: 'rule service name="ftp" audit limit value="1/m" accept'
     permanent: true
     state: enabled
 ```
 
-```
+```yaml
 - firewalld:
     source: 192.0.2.0/24
     zone: internal
     state: enabled
 ```
 
-```
+```yaml
 - firewalld:
     zone: trusted
     interface: eth2
@@ -537,7 +537,7 @@ firewalld要求远程节点上的firewalld版本在0.2.11以上。
     state: enabled
 ```
 
-```
+```yaml
 - firewalld:
     masquerade: yes
     state: enabled
@@ -552,30 +552,30 @@ firewalld要求远程节点上的firewalld版本在0.2.11以上。
 
 ### 支持$home，支持$HOME和"<", ">", "|", ";" and "&"。
 * 支持$home
-  ```
+  ```yaml
   - name: test $home
     shell: echo "Test1" > ~/tmp/test1
   ```
 * 支持&&  
-  ```  
+  ```  yaml
   - shell: service jboss start && chkconfig jboss on
   ```
 
 * 支持>>
-  ```
+  ```yaml
   - shell: echo foo >> /tmp/testfoo
   ```
 
 ### 调用脚本
 
 * 调用脚本
-  ```
+  ```yaml
   - shell: somescript.sh >> somelog.txt
   ```
 
 * 执行命令前，改变工作目录
 
-  ```
+  ```yaml
   - shell: somescript.sh >> somelog.txt
     args:
       chdir: somedir/
@@ -583,7 +583,7 @@ firewalld要求远程节点上的firewalld版本在0.2.11以上。
 
 * 在执行命令钱改变工作目录，并且在文件somelog.txt不存在时执行命令。
 
-  ```
+  ```yaml
   - shell: somescript.sh >> somelog.txt
     args:
       chdir: somedir/
@@ -592,7 +592,7 @@ firewalld要求远程节点上的firewalld版本在0.2.11以上。
 
 * 指定用bash运行命令
 
-  ```
+  ```yaml
   - shell: cat < /tmp/\*txt
     args:
       executable: /bin/bash
@@ -604,12 +604,12 @@ firewalld要求远程节点上的firewalld版本在0.2.11以上。
 
 ### 和Shell一样
 * 像Shell一样调用单条命令
-  ```
+  ```yaml
   - command: /sbin/shutdown -t now
   ```
 
 * 和Shell一样，可以在执行命令钱改变目录，并检查文件database不存在时再执行
-  ```
+  ```yaml
   - command: /usr/bin/make_database.sh arg1 arg2
     args:
       chdir: somedir/
@@ -619,13 +619,13 @@ firewalld要求远程节点上的firewalld版本在0.2.11以上。
 ### 和Shell不一样
 
 * 与Shell不同，多了一个传参方式：
-  ```
+  ```yaml
   - command: /usr/bin/make_database.sh arg1 arg2 creates=/path/to/database
   ```
 * 不支持&&和>>
 
   下面的写法，没有办法创建~/tmp/test3和~/tmp/test4的
-  ```
+  ```yaml
   - name: test $home
     command: echo "test3" > ~/tmp/test3 && echo "test4" > ~/tmp/test4
   ```

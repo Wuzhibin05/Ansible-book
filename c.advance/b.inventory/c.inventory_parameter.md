@@ -1,4 +1,4 @@
-# 指定连接的参数
+# 主机连接的参数
 
 
 ## 参数
@@ -22,19 +22,18 @@ http://docs.ansible.com/ansible/intro_inventory.html#list-of-behavioral-inventor
 
 
 
-## 变量
+## 主机组变量
 
 
-为一个组指定变量
+为一个组指定变量，可以被playbook相关的主机组引用。
 
 ```ini
-[atlanta]
-host1
-host2
+[kibana]
+192.168.8.137
 
-[atlanta:vars]
-ntp_server=ntp.atlanta.example.com
-proxy=proxy.atlanta.example.com
+[kibana:vars]
+elasticsearch_server=192.168.8.137
+port=9200
 ```
 
 

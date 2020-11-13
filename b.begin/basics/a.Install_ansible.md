@@ -22,9 +22,15 @@ sudo yum install ansible -y
 ```shell
 # 服务端生成ssh key
 ssh-keygen # 连续回车或者输入指定密码
-# 拷贝ssh key到远程主机，ssh的时候就不需要输入密码了 
+```
+
+```shell
+# 拷贝ssh key到远程主机（被控主机），ssh的时候就不需要输入密码了 
 # ssh-copy-id remoteuser@remoteserver 
 ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.8.188
+```
+
+```shell
 # ssh的时候不会提示是否保存key
 ssh-keyscan remote_servers >> ~/.ssh/known_hosts
 ```
@@ -36,7 +42,13 @@ ssh remoteuser@remoteserver
 ssh root@192.168.8.188
 ```
 
-- **管理主机必须是linux服务器**
+- 使用密码连接
+
+```shell
+# 主机的清单中配置用户名密码
+[test-host]
+172.16.60.220 ansible_ssh_user=root ansible_ssh_pass=123456 ansible_ssh_port=22
+```
 
 ## 被管理的远程主机：
 

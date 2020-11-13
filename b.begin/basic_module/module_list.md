@@ -12,6 +12,7 @@
 * [copy](module_copy.html) - 从本地拷贝文件到远程节点
 * [template](module_template.html) - 从本地拷贝文件到远程节点，并进行变量的替换
 * [file](module_file.html) - 设置文件的属性
+* [unarchive](module_unarchive.html) - 解压文件
 
 linux上常用的操作
 * [user](module_user.html) - 管理用户账户

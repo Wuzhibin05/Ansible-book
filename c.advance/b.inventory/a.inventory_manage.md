@@ -14,14 +14,15 @@
 ### 修改主机目录的配置文件
 
 /etc/ansible/ansible.cfg
-```tex
+```ini
 ...
 inventory      = /etc/ansible/hosts
 ...
 ```
 
-
 ### 命令行中传递主机目录配置文件
+
+指定使用的配置文件
 
 ```shell
 ansible-playbook -i hosts site.yml
